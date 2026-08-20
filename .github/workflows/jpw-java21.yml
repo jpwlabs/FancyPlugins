@@ -23,13 +23,21 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
+      - name: Test canonical artifact normalization
+        run: python3 -m unittest scripts/test_normalize_artifacts.py
       - name: Test and build the selected plugins only
         run: >-
-          ./gradlew
+          ./gradlew clean
           :plugins:fancynpcs-v2:test
           :plugins:fancynpcs-v2:shadowJar
           :plugins:fancyholograms-v2:shadowJar
           :plugins:fancydialogs:shadowJar
-          --no-daemon
+          --no-daemon --no-build-cache
+      - name: Normalize cross-platform artifact metadata
+        run: >-
+          python3 scripts/normalize-artifacts.py
+          plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.3.jar
+          plugins/fancyholograms-v2/build/libs/FancyHolograms-2.9.1.180-jpw.3.jar
+          plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.3.jar
       - name: Reject telemetry, unlocked runtime, and non-Java-21 artifacts
         run: python3 scripts/audit-artifacts.py
