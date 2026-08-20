@@ -31,4 +31,10 @@ allprojects {
         isPreserveFileTimestamps = false
         isReproducibleFileOrder = true
     }
+
+    // Deflated ZIP bytes can vary with the host zlib/JDK implementation. Store entries verbatim so the
+    // locked plugin digests are identical on macOS, Linux CI, and the Java 21 fleet.
+    tasks.withType<org.gradle.api.tasks.bundling.Zip>().configureEach {
+        entryCompression = org.gradle.api.tasks.bundling.ZipEntryCompression.STORED
+    }
 }

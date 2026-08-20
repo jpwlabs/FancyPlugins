@@ -8,6 +8,7 @@ import json
 import struct
 import sys
 import zipfile
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,6 +57,13 @@ def audit(name: str, path: Path) -> dict[str, object]:
         bad = archive.testzip()
         if bad:
             raise ValueError(f"{path.name}: corrupt ZIP entry {bad}")
+        duplicate_entries = sorted(
+            entry for entry, count in Counter(info.filename for info in archive.infolist()).items() if count > 1
+        )
+        if duplicate_entries:
+            preview = ", ".join(duplicate_entries[:5])
+            suffix = "" if len(duplicate_entries) <= 5 else f" (+{len(duplicate_entries) - 5} more)"
+            raise ValueError(f"{path.name}: duplicate ZIP entries: {preview}{suffix}")
         for entry in archive.infolist():
             data = archive.read(entry)
             if entry.filename.endswith(".class"):

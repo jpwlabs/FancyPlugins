@@ -105,6 +105,12 @@ tasks {
     shadowJar {
         relocate("org.incendo", "de.oliver")
         relocate("org.lushplugins.chatcolorhandler", "de.oliver.fancynpcs.libs.chatcolorhandler")
+        // fn-v2-api already shades and relocates ChatColorHandler. Exclude its transitive original here;
+        // relocating both copies to one path makes Shadow emit duplicate central-directory records.
+        dependencies {
+            exclude(dependency("org.lushplugins:ChatColorHandler:.*"))
+        }
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         archiveClassifier.set("")
         archiveBaseName.set("FancyNpcs")
         dependsOn(":plugins:fancynpcs-v2:fn-v2-api:shadowJar")
