@@ -51,6 +51,10 @@ dependencies {
     implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.12")
 
     implementation("org.jetbrains:annotations:26.1.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+    testImplementation("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.4")
 }
 
 paper {
@@ -80,6 +84,10 @@ paper {
 }
 
 tasks {
+    test {
+        useJUnitPlatform()
+    }
+
     runServer {
         minecraftVersion("1.21.8")
 
