@@ -79,74 +79,28 @@ public class SkinManagerImpl implements SkinManager, Listener {
 
     @Override
     public SkinData getByUUID(UUID uuid, SkinData.SkinVariant variant) {
-        SkinData cached = tryToGetFromCache(uuid.toString(), variant);
-        if (cached != null) {
-            return cached;
-        }
-
-        mojangQueue.add(new SkinGenerationRequest(uuid.toString(), variant));
-
-//        GenerateRequest genReq = GenerateRequest.user(uuid);
-//        genReq.variant(Variant.valueOf(variant.name()));
-//        mineSkinQueue.add(new MineSkinQueue.SkinRequest(uuid.toString(), genReq));
-        return new SkinData(uuid.toString(), variant);
+        return approvedDefault(variant, "UUID skin lookup");
     }
 
     @Override
     public SkinData getByUsername(String username, SkinData.SkinVariant variant) throws SkinLoadException {
-        SkinData cached = tryToGetFromCache(username, variant);
-        if (cached != null) {
-            return cached;
-        }
-
-        UUID uuid = uuidCache.getUUID(username);
-        if (uuid == null) {
-            uuid = UUIDFetcher.getUUID(username);
-            if (uuid == null) {
-                throw new SkinLoadException(SkinLoadException.Reason.INVALID_USERNAME, "(USERNAME = '" + username + "')");
-            }
-            uuidCache.cacheUUID(username, uuid);
-        }
-
-        SkinData dataByUUID = getByUUID(uuid, variant);
-
-        return new SkinData(username, dataByUUID.getVariant(), dataByUUID.getTextureValue(), dataByUUID.getTextureSignature());
+        return approvedDefault(variant, "username skin lookup");
     }
 
     @Override
     public SkinData getByURL(String url, SkinData.SkinVariant variant) throws SkinLoadException {
-        SkinData cached = tryToGetFromCache(url, variant);
-        if (cached != null) {
-            return cached;
-        }
-
-        GenerateRequest genReq;
-        try {
-            genReq = GenerateRequest.url(url);
-        } catch (final IllegalArgumentException | MalformedURLException e) {
-            throw new SkinLoadException(SkinLoadException.Reason.INVALID_URL, "(URL = '" + url + "')");
-        }
-        genReq.variant(Variant.valueOf(variant.name()));
-        mineSkinQueue.add(new SkinGenerationRequest(url, variant, genReq));
-        return new SkinData(url, variant);
+        throw new SkinLoadException(SkinLoadException.Reason.INVALID_URL, "(JPW POLICY REJECTED URL)");
     }
 
     @Override
     public SkinData getByFile(String filePath, SkinData.SkinVariant variant) throws SkinLoadException {
-        SkinData cached = tryToGetFromCache(filePath, variant);
-        if (cached != null) {
-            return cached;
-        }
+        return getByIdentifier(filePath, variant);
+    }
 
-        File file = new File(SKINS_DIRECTORY + filePath);
-        if (!file.exists()) {
-            throw new SkinLoadException(SkinLoadException.Reason.INVALID_FILE, "(FILE = '" + filePath + "')");
-        }
-
-        GenerateRequest genReq = GenerateRequest.upload(file);
-        genReq.variant(Variant.valueOf(variant.name()));
-        mineSkinQueue.add(new SkinGenerationRequest(filePath, variant, genReq));
-        return new SkinData(filePath, variant);
+    private SkinData approvedDefault(SkinData.SkinVariant variant, String rejectedSource) {
+        FancyNpcs.getInstance().getFancyLogger().warn(rejectedSource + " disabled by JPW static-skin policy");
+        SkinData cached = tryToGetFromCache("default.png", variant);
+        return cached != null ? cached : new SkinData("default.png", variant);
     }
 
     @EventHandler

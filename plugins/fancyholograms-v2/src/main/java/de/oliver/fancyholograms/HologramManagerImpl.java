@@ -122,7 +122,9 @@ public final class HologramManagerImpl implements HologramManager {
                         }
                     }
 
-                    FancyHolograms.get().getHologramThread().submit(() -> plugin.getHologramStorage().delete(hologram));
+                    if (hologram.getData().isPersistent()) {
+                        FancyHolograms.get().getHologramThread().submit(() -> plugin.getHologramStorage().delete(hologram));
+                    }
                 }
         );
 

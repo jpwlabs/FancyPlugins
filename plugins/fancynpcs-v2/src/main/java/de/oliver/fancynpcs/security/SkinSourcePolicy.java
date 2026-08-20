@@ -17,4 +17,8 @@ public final class SkinSourcePolicy {
         }
         return APPROVED.contains(identifier.trim().toLowerCase(Locale.ROOT));
     }
+
+    public static String safeIdentifier(String requested) {
+        return isApproved(requested) ? requested.trim().toLowerCase(Locale.ROOT) : "default.png";
+    }
 }
