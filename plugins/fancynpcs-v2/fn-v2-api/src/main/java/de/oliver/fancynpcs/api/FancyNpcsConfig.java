@@ -37,8 +37,6 @@ public interface FancyNpcsConfig {
 
     boolean isSwingArmOnUpdate();
 
-    String getMineSkinApiKey();
-
     List<String> getBlockedCommands();
 
     Map<String, Integer> getMaxNpcsPerPermission();

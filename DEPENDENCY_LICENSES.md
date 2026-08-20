@@ -9,7 +9,6 @@ Runtime code intentionally shaded by the selected build is limited to:
 |---|---|---|
 | FancyPlugins selected source and internal libraries | upstream `466eee00a4f815b3cfdf69ff7e0413e0b1e08aeb` | MIT |
 | Incendo Cloud | `org.incendo:cloud-*` at the versions in Gradle lockfiles | MIT |
-| MineSkin Java client | `org.mineskin:java-client*` at the locked `3.0.3-SNAPSHOT` resolution | MIT |
 | Google Gson / Guava | versions in Gradle lockfiles | Apache-2.0 |
 | jsoup | version in Gradle lockfiles | MIT |
 | JetBrains annotations | version in Gradle lockfiles | Apache-2.0 |

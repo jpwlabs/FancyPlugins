@@ -6,8 +6,9 @@ FancyHolograms v2, FancyDialogs, and the libraries shaded inside those artifacts
 
 JPW changes remove analytics, bStats, network version checks, the OP command action,
 the Citizens converter, and default administrative command registration. Skin lookup is
-closed to JPW-approved cached asset identifiers. The only supported server version is
-Paper 1.21.8 on Java 21.
+closed to JPW-approved cached asset identifiers; the MineSkin/Mojang clients and their
+mutable client dependency are not present in the artifact. The only supported server
+version is Paper 1.21.8 on Java 21.
 
 The interaction policy includes the semantic correction from upstream commit
 `512aa29dd42ef27b728b73fccd6a013f816995a6`, covered by an exactly-once regression test.

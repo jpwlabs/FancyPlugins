@@ -27,6 +27,11 @@ FORBIDDEN = (
     b"bstats.org",
     b"api.modrinth.com/v2/project/",
     b"api.hangar.papermc.io/v1/projects/",
+    b"org/mineskin",
+    b"fancynpcs/skins/mineskin",
+    b"fancynpcs/skins/mojang",
+    b"sessionserver.mojang.com",
+    b"api.mineskin.org",
 )
 MAX_CLASS_MAJOR = 65
 

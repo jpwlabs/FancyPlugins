@@ -199,11 +199,6 @@ public final class CloudCommandManager {
         annotationParser.parse(VisibilityCMD.INSTANCE);
         annotationParser.parse(ScaleCMD.INSTANCE);
 
-        if (FancyNpcs.ENABLE_DEBUG_MODE_FEATURE_FLAG.isEnabled()) {
-            annotationParser.parse(FancyNpcsDebugCMD.INSTANCE);
-        }
-
-
         return this;
     }
 

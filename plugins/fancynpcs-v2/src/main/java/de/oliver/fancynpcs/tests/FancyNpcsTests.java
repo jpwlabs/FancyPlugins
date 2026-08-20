@@ -3,7 +3,6 @@ package de.oliver.fancynpcs.tests;
 import de.oliver.fancynpcs.tests.api.ChatColorHandlerTest;
 import de.oliver.fancynpcs.tests.api.CreateNpcTest;
 import de.oliver.fancynpcs.tests.commands.*;
-import de.oliver.fancynpcs.tests.skins.SkinManagerTest;
 import de.oliver.plugintests.FPTestClass;
 import org.bukkit.entity.Player;
 
@@ -22,9 +21,6 @@ public class FancyNpcsTests {
         // api tests
         addTest(CreateNpcTest.class);
         addTest(ChatColorHandlerTest.class);
-
-        // skin tests
-        addTest(SkinManagerTest.class);
 
         // command tests
         addTest(CreateCMDTest.class);

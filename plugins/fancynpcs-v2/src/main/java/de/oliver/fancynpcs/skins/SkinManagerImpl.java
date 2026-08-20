@@ -1,58 +1,32 @@
 package de.oliver.fancynpcs.skins;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import de.oliver.fancylib.UUIDFetcher;
 import de.oliver.fancynpcs.FancyNpcs;
-import de.oliver.fancynpcs.api.Npc;
 import de.oliver.fancynpcs.api.skins.SkinData;
-import de.oliver.fancynpcs.api.skins.SkinGeneratedEvent;
 import de.oliver.fancynpcs.api.skins.SkinLoadException;
 import de.oliver.fancynpcs.api.skins.SkinManager;
 import de.oliver.fancynpcs.skins.cache.SkinCache;
 import de.oliver.fancynpcs.skins.cache.SkinCacheData;
 import de.oliver.fancynpcs.skins.uuidcache.UUIDCache;
 import de.oliver.fancynpcs.security.SkinSourcePolicy;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.lushplugins.chatcolorhandler.ChatColorHandler;
-import org.mineskin.data.Variant;
-import org.mineskin.request.GenerateRequest;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.UUID;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
-public class SkinManagerImpl implements SkinManager, Listener {
-
-    public final static ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(
-            5,
-            new ThreadFactoryBuilder()
-                    .setNameFormat("FancyNpcs-Skins-%d")
-                    .build()
-    );
+public class SkinManagerImpl implements SkinManager {
 
     private final String SKINS_DIRECTORY = "plugins/FancyNpcs/skins/";
 
     private final UUIDCache uuidCache;
     private final SkinCache fileCache;
     private final SkinCache memCache;
-    private final SkinGenerationQueue mojangQueue;
-    private final SkinGenerationQueue mineSkinQueue;
-
     public SkinManagerImpl(
             UUIDCache uuidCache,
             SkinCache fileCache,
-            SkinCache memCache,
-            SkinGenerationQueue mojangQueue,
-            SkinGenerationQueue mineSkinQueue
+            SkinCache memCache
     ) {
         this.uuidCache = uuidCache;
         this.fileCache = fileCache;
         this.memCache = memCache;
-        this.mojangQueue = mojangQueue;
-        this.mineSkinQueue = mineSkinQueue;
 
         File skinsDir = new File(SKINS_DIRECTORY);
         if (!skinsDir.exists()) {
@@ -101,47 +75,6 @@ public class SkinManagerImpl implements SkinManager, Listener {
         FancyNpcs.getInstance().getFancyLogger().warn(rejectedSource + " disabled by JPW static-skin policy");
         SkinData cached = tryToGetFromCache("default.png", variant);
         return cached != null ? cached : new SkinData("default.png", variant);
-    }
-
-    @EventHandler
-    public void onSkinGenerated(SkinGeneratedEvent event) {
-        if (event.getSkin() == null || !event.getSkin().hasTexture()) {
-            FancyNpcs.getInstance().getFancyLogger().error("Generated skin has no texture!");
-            return;
-        }
-
-        for (Npc npc : FancyNpcs.getInstance().getNpcManager().getAllNpcs()) {
-            SkinData skin = npc.getData().getSkinData();
-            if (skin == null)
-                continue;
-
-            String id = skin.getParsedIdentifier();
-            if (SkinUtils.isUsername(id)) {
-                UUID uuid = uuidCache.getUUID(id);
-                if (uuid == null) {
-                    uuid = UUIDFetcher.getUUID(id);
-                }
-
-                if (uuid != null) {
-                    uuidCache.cacheUUID(id, uuid);
-                    id = uuid.toString();
-                }
-            }
-            if (id.equals(event.getId())) {
-                final SkinData updatedSkin = new SkinData(
-                        skin.getIdentifier(),
-                        event.getSkin().getVariant(),
-                        event.getSkin().getTextureValue(),
-                        event.getSkin().getTextureSignature()
-                );
-                npc.getData().setSkinData(updatedSkin);
-                npc.removeForAll();
-                npc.spawnForAll();
-                FancyNpcs.getInstance().getFancyLogger().info("Updated skin for NPC: " + npc.getData().getName());
-            }
-        }
-
-        cacheSkin(event.getSkin());
     }
 
     private SkinData tryToGetFromCache(String identifier, SkinData.SkinVariant variant) {
