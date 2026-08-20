@@ -21,9 +21,9 @@ Build command:
   :plugins:fancyholograms-v2:shadowJar :plugins:fancydialogs:shadowJar \
   --no-daemon --no-build-cache
 python3 scripts/normalize-artifacts.py \
-  plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.3.jar \
-  plugins/fancyholograms-v2/build/libs/FancyHolograms-2.9.1.180-jpw.3.jar \
-  plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.3.jar
+  plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.4.jar \
+  plugins/fancyholograms-v2/build/libs/FancyHolograms-2.9.1.180-jpw.4.jar \
+  plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.4.jar
 python3 scripts/audit-artifacts.py
 ```
 
