@@ -86,6 +86,7 @@ paper {
 tasks {
     test {
         useJUnitPlatform()
+        dependsOn(":plugins:fancydialogs:fd-api:shadowJar")
     }
 
     runServer {
