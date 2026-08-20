@@ -1,7 +1,7 @@
 package de.oliver.fancynpcs.skins.mojang;
 
 import com.google.gson.Gson;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.fancynpcs.api.FancyNpcsPlugin;
 import de.oliver.fancynpcs.api.skins.SkinData;
 import de.oliver.fancynpcs.skins.mineskin.RatelimitException;

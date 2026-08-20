@@ -58,10 +58,6 @@ public enum ActionCMD {
                 .replaceStripped("total", String.valueOf(npc.getData().getActions(trigger).size()))
                 .send(sender);
 
-        if (actionType.getName().equalsIgnoreCase("player_command_as_op")) {
-            translator.translate("npc_action_add_op_warning")
-                    .send(sender);
-        }
     }
 
     @Command("npc action <npc> <trigger> add_before <index> <actionType> [value]")
@@ -100,10 +96,6 @@ public enum ActionCMD {
                 .replaceStripped("total", String.valueOf(npc.getData().getActions(trigger).size()))
                 .send(sender);
 
-        if (actionType.getName().equalsIgnoreCase("player_command_as_op")) {
-            translator.translate("npc_action_add_op_warning")
-                    .send(sender);
-        }
     }
 
     @Command("npc action <npc> <trigger> add_after <index> <actionType> [value]")
@@ -142,10 +134,6 @@ public enum ActionCMD {
                 .replaceStripped("total", String.valueOf(npc.getData().getActions(trigger).size()))
                 .send(sender);
 
-        if (actionType.getName().equalsIgnoreCase("player_command_as_op")) {
-            translator.translate("npc_action_add_op_warning")
-                    .send(sender);
-        }
     }
 
     @Command("npc action <npc> <trigger> set <number> <actionType> [value]")
@@ -191,10 +179,6 @@ public enum ActionCMD {
                 .replaceStripped("total", String.valueOf(npc.getData().getActions(trigger).size()))
                 .send(sender);
 
-        if (actionType.getName().equalsIgnoreCase("player_command_as_op")) {
-            translator.translate("npc_action_add_op_warning")
-                    .send(sender);
-        }
     }
 
     @Command("npc action <npc> <trigger> remove <number>")

@@ -112,10 +112,10 @@ public class FancyNpcsConfigImpl implements FancyNpcsConfig {
         disabledInteractionCooldownMessage = (boolean) ConfigHelper.getOrDefault(config, "disable_interaction_cooldown_message", false);
         config.setInlineComments("disable_interaction_cooldown_message", List.of("Whether interaction cooldown messages are disabled."));
 
-        muteVersionNotification = (boolean) ConfigHelper.getOrDefault(config, "mute_version_notification", false);
+        muteVersionNotification = (boolean) ConfigHelper.getOrDefault(config, "mute_version_notification", true);
         config.setInlineComments("mute_version_notification", List.of("Whether version notifications are muted."));
 
-        enableAutoSave = (boolean) ConfigHelper.getOrDefault(config, "enable_autosave", true);
+        enableAutoSave = (boolean) ConfigHelper.getOrDefault(config, "enable_autosave", false);
         config.setInlineComments("enable_autosave", List.of("Whether autosave is enabled."));
 
         autoSaveInterval = (int) ConfigHelper.getOrDefault(config, "autosave_interval", 15);
@@ -127,7 +127,7 @@ public class FancyNpcsConfigImpl implements FancyNpcsConfig {
         npcUpdateVisibilityInterval = (int) ConfigHelper.getOrDefault(config, "npc_update_visibility_interval", 20);
         config.setInlineComments("npc_update_visibility_interval", List.of("The interval at which the NPC visibility is updated (in ticks)."));
 
-        registerCommands = (boolean) ConfigHelper.getOrDefault(config, "register_commands", true);
+        registerCommands = (boolean) ConfigHelper.getOrDefault(config, "register_commands", false);
         config.setInlineComments("register_commands", List.of("Whether the plugin should register its commands."));
 
         turnToPlayerDistance = (int) ConfigHelper.getOrDefault(config, "turn_to_player_distance", 5);

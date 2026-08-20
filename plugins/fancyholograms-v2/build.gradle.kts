@@ -18,7 +18,6 @@ allprojects {
     description = "Simple, lightweight and fast hologram plugin using display entities"
 
     repositories {
-        mavenLocal()
         mavenCentral()
 
         maven(url = "https://repo.papermc.io/repository/maven-public/")
@@ -33,7 +32,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
 
     implementation(project(":plugins:fancyholograms-v2:api"))
 
@@ -45,9 +44,6 @@ dependencies {
     implementation(project(":libraries:common"))
     implementation(project(":libraries:jdb"))
     implementation(project(":libraries:config"))
-    implementation("de.oliver.FancyAnalytics:java-sdk:0.0.6")
-    implementation("de.oliver.FancyAnalytics:mc-api:0.1.13")
-    implementation("de.oliver.FancyAnalytics:logger:0.0.8")
 
     compileOnly(project(":plugins:fancynpcs-v2:fn-v2-api"))
     compileOnly("org.lushplugins:ChatColorHandler:6.0.4")
@@ -87,7 +83,7 @@ paper {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.11")
+        minecraftVersion("1.21.8")
 
         downloadPlugins {
 //            modrinth("fancynpcs", "2.5.2")
@@ -153,5 +149,5 @@ val gitCommitMessage: Provider<String> = providers.exec {
 }.standardOutput.asText.map { it.trim() }
 
 fun getFHVersion(): String {
-    return file("VERSION").readText()
+    return file("VERSION").readText().trim()
 }

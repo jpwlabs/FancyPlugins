@@ -48,13 +48,11 @@ public enum ServerVersion {
     }
 
     public static List<String> getSupportedVersions() {
-        return Arrays.stream(values())
-                .map(ServerVersion::getVersion)
-                .toList();
+        return List.of(v1_21_8.getVersion());
     }
 
     public static boolean isVersionSupported(String version) {
-        return getByVersion(version) != null;
+        return v1_21_8.getVersion().equals(version);
     }
 
     /**

@@ -169,7 +169,6 @@ public final class CloudCommandManager {
      */
     public @NotNull CloudCommandManager registerCommands() {
         annotationParser.parse(FancyNpcsCMD.INSTANCE);
-        annotationParser.parse(NpcConvertCMD.INSTANCE);
 
         annotationParser.parse(AttributeCMD.INSTANCE);
         annotationParser.parse(CenterCMD.INSTANCE);

@@ -1,6 +1,6 @@
 package de.oliver.fancynpcs.skins.cache;
 
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.fancynpcs.FancyNpcs;
 import de.oliver.fancynpcs.api.skins.SkinData;
 import de.oliver.jdb.JDB;

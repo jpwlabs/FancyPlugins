@@ -1,13 +1,11 @@
 package de.oliver.fancynpcs.utils;
 
-import de.oliver.fancyanalytics.sdk.events.Event;
 import de.oliver.fancynpcs.FancyNpcs;
 import de.oliver.fancynpcs.api.skins.SkinData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.HashMap;
 
 public class OldSkinCacheMigrator {
 
@@ -37,7 +35,6 @@ public class OldSkinCacheMigrator {
         OLD_SKIN_CACHE.delete();
 
         FancyNpcs.getInstance().getLogger().info("Migrated " + amount + " skins from old cache.");
-        FancyNpcs.getInstance().getFancyAnalytics().sendEvent(new Event("SkinCacheMigrated", new HashMap<>()).withProperty("amount", String.valueOf(amount)));
     }
 
 }

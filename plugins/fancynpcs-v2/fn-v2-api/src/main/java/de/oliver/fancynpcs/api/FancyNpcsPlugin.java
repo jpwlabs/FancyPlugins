@@ -1,7 +1,7 @@
 package de.oliver.fancynpcs.api;
 
 import com.fancyinnovations.config.featureflags.FeatureFlagConfig;
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
 import de.oliver.fancylib.serverSoftware.schedulers.FancyScheduler;
 import de.oliver.fancylib.translations.Translator;
 import de.oliver.fancynpcs.api.actions.ActionManager;

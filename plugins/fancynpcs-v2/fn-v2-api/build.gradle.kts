@@ -4,14 +4,13 @@ plugins {
     id("com.gradleup.shadow")
 }
 
-val minecraftVersion = "1.21.11"
+val minecraftVersion = "1.21.8"
 
 dependencies {
     compileOnly("dev.folia:folia-api:$minecraftVersion-R0.1-SNAPSHOT")
 
     compileOnly(project(":libraries:common"))
     compileOnly(project(":libraries:config"))
-    compileOnly("de.oliver.FancyAnalytics:logger:0.0.8")
 
     implementation("org.lushplugins:ChatColorHandler:6.0.4")
 }
@@ -114,5 +113,5 @@ tasks {
 }
 
 fun getFNVersion(): String {
-    return file("../VERSION").readText()
+    return file("../VERSION").readText().trim()
 }

@@ -1,7 +1,7 @@
 package com.fancyinnovations.config;
 
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

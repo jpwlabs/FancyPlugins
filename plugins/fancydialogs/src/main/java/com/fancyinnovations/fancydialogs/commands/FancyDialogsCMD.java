@@ -6,7 +6,7 @@ import com.fancyinnovations.fancydialogs.api.data.DialogData;
 import com.fancyinnovations.fancydialogs.api.dialogs.ConfirmationDialog;
 import com.fancyinnovations.fancydialogs.config.FancyDialogsConfig;
 import com.fancyinnovations.fancydialogs.dialog.DialogImpl;
-import de.oliver.fancyanalytics.logger.LogLevel;
+import de.oliver.jpw.logging.LogLevel;
 import de.oliver.fancylib.translations.Language;
 import de.oliver.fancylib.translations.Translator;
 import revxrsal.commands.annotation.Command;

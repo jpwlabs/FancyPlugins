@@ -1,7 +1,6 @@
 package com.fancyinnovations.fancydialogs;
 
 import com.fancyinnovations.fancydialogs.actions.ActionRegistryImpl;
-import com.fancyinnovations.fancydialogs.analytics.Analytics;
 import com.fancyinnovations.fancydialogs.api.Dialog;
 import com.fancyinnovations.fancydialogs.api.DialogActionRegistry;
 import com.fancyinnovations.fancydialogs.api.FancyDialogs;
@@ -23,22 +22,19 @@ import com.fancyinnovations.fancydialogs.registry.DefaultDialogs;
 import com.fancyinnovations.fancydialogs.registry.DialogRegistry;
 import com.fancyinnovations.fancydialogs.storage.DialogStorage;
 import com.fancyinnovations.fancydialogs.storage.JsonDialogStorage;
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
-import de.oliver.fancyanalytics.logger.LogLevel;
-import de.oliver.fancyanalytics.logger.appender.Appender;
-import de.oliver.fancyanalytics.logger.appender.ConsoleAppender;
-import de.oliver.fancyanalytics.logger.appender.JsonAppender;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
+import de.oliver.jpw.logging.LogLevel;
+import de.oliver.jpw.logging.appender.Appender;
+import de.oliver.jpw.logging.appender.ConsoleAppender;
+import de.oliver.jpw.logging.appender.JsonAppender;
 import de.oliver.fancylib.VersionConfig;
 import de.oliver.fancylib.logging.PluginMiddleware;
 import de.oliver.fancylib.serverSoftware.ServerSoftware;
 import de.oliver.fancylib.translations.Language;
 import de.oliver.fancylib.translations.TextConfig;
 import de.oliver.fancylib.translations.Translator;
-import de.oliver.fancylib.versionFetcher.MasterVersionFetcher;
-import de.oliver.fancylib.versionFetcher.VersionFetcher;
 import de.oliver.fancysitula.api.IFancySitula;
 import de.oliver.fancysitula.api.utils.ServerVersion;
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,15 +46,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.util.concurrent.CompletableFuture.supplyAsync;
-
 public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
 
     private static FancyDialogsPlugin INSTANCE;
     private final ExtendedFancyLogger fancyLogger;
 
     private FancyDialogsConfig fdConfig;
-    private VersionFetcher versionFetcher;
     private VersionConfig versionConfig;
     private Translator translator;
     private DialogRegistry dialogRegistry;
@@ -116,8 +109,7 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
                 .findFirst().orElse(translator.getFallbackLanguage());
         translator.setSelectedLanguage(selectedLanguage);
 
-        versionFetcher = new MasterVersionFetcher(getName());
-        versionConfig = new VersionConfig(this, versionFetcher);
+        versionConfig = new VersionConfig(this);
         versionConfig.load();
 
         dialogStorage = new JsonDialogStorage();
@@ -145,25 +137,6 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
 
     @Override
     public void onEnable() {
-        final ComparableVersion currentVersion = new ComparableVersion(versionConfig.getVersion());
-        supplyAsync(versionFetcher::fetchNewestVersion)
-                .thenApply(Objects::requireNonNull)
-                .whenComplete((newest, error) -> {
-                    if (error != null || newest.compareTo(currentVersion) <= 0) {
-                        return; // could not get the newest version or already on latest
-                    }
-
-                    fancyLogger.warn("You are not using the latest version of the FancyDialogs plugin.");
-                    getLogger().warning("""
-                            
-                            -------------------------------------------------------
-                            You are not using the latest version of the FancyDialogs plugin.
-                            Please update to the newest version (%s).
-                            %s
-                            -------------------------------------------------------
-                            """.formatted(newest, versionFetcher.getDownloadUrl()));
-                });
-
         if (!ServerSoftware.isPaper()) {
             fancyLogger.warn("""
                     --------------------------------------------------
@@ -175,10 +148,10 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
         }
 
         String version = Bukkit.getMinecraftVersion();
-        if (ServerVersion.getByVersion(version).getProtocolVersion() < ServerVersion.v1_21_6.getProtocolVersion()) {
+        if (!version.equals("1.21.8")) {
             fancyLogger.error("""
                     --------------------------------------------------
-                    FancyDialogs requires Minecraft version 1.21.6 or higher.
+                    This JPW build of FancyDialogs requires Paper 1.21.8.
                     Your server is running version %s, which is not supported.
                     Please update your server to the latest version.
                     --------------------------------------------------
@@ -189,7 +162,9 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
 
         registerListeners();
 
-        registerCommands();
+        if (fdConfig.isRegisterCommands()) {
+            registerCommands();
+        }
 
         // FancyNpcs actions
         if (Bukkit.getPluginManager().isPluginEnabled("FancyNpcs")) {
@@ -197,9 +172,6 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
         }
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
-        Analytics analytics = new Analytics();
-        analytics.start();
 
         fancyLogger.info("Successfully enabled FancyDialogs version %s".formatted(getDescription().getVersion()));
     }

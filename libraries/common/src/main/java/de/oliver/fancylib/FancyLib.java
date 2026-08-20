@@ -1,6 +1,6 @@
 package de.oliver.fancylib;
 
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
 import de.oliver.fancylib.gui.inventoryClick.InventoryClickListener;
 import de.oliver.fancylib.gui.inventoryClick.impl.CancelInventoryItemClick;
 import de.oliver.fancylib.gui.inventoryClick.impl.ChangePageInventoryItemClick;

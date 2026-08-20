@@ -2,7 +2,7 @@ package com.fancyinnovations.fancydialogs.storage;
 
 import com.fancyinnovations.fancydialogs.FancyDialogsPlugin;
 import com.fancyinnovations.fancydialogs.api.data.DialogData;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.jdb.JDB;
 
 import java.io.IOException;

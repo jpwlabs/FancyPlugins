@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
-    compileOnly("de.oliver.FancyAnalytics:logger:0.0.8")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly(project(":libraries:common"))
     compileOnly("org.jetbrains:annotations:26.1.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.3")
@@ -100,7 +100,7 @@ tasks {
 
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(17) //TODO change to 21, once 1.19.4 support is dropped
+        options.release.set(21)
     }
 
     java {
@@ -121,7 +121,7 @@ tasks {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17)) //TODO change to 21, once 1.19.4 support is dropped
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 fun getCFGVersion(): String {

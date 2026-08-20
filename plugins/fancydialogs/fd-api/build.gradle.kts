@@ -4,13 +4,12 @@ plugins {
     id("com.gradleup.shadow")
 }
 
-val minecraftVersion = "1.21.6"
+val minecraftVersion = "1.21.8"
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
 
     compileOnly(project(":libraries:common"))
-    compileOnly("de.oliver.FancyAnalytics:logger:0.0.8")
 
     implementation("org.lushplugins:ChatColorHandler:6.0.4")
 
@@ -115,5 +114,5 @@ tasks {
 }
 
 fun getFDVersion(): String {
-    return file("../VERSION").readText()
+    return file("../VERSION").readText().trim()
 }

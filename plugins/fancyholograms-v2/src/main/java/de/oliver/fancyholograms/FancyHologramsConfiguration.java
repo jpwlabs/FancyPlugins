@@ -134,16 +134,16 @@ public final class FancyHologramsConfiguration implements HologramConfiguration 
     private void setOptions(@NotNull FileConfiguration config) {
 
         // saving
-        autosaveEnabled = (boolean) ConfigHelper.getOrDefault(config, CONFIG_AUTOSAVE_ENABLED, true);
+        autosaveEnabled = (boolean) ConfigHelper.getOrDefault(config, CONFIG_AUTOSAVE_ENABLED, false);
         autosaveInterval = (int) ConfigHelper.getOrDefault(config, CONFIG_AUTOSAVE_INTERVAL, 15);
-        saveOnChangedEnabled = (boolean) ConfigHelper.getOrDefault(config, CONFIG_SAVE_ON_CHANGED, true);
+        saveOnChangedEnabled = (boolean) ConfigHelper.getOrDefault(config, CONFIG_SAVE_ON_CHANGED, false);
         // logging
         logLevel = (String) ConfigHelper.getOrDefault(config, CONFIG_LOG_LEVEL, "INFO");
         hologramLoadLogging = (boolean) ConfigHelper.getOrDefault(config, CONFIG_LOG_ON_WORLD_LOAD, true);
-        versionNotifs = (boolean) ConfigHelper.getOrDefault(config, CONFIG_VERSION_NOTIFICATIONS, true);
+        versionNotifs = (boolean) ConfigHelper.getOrDefault(config, CONFIG_VERSION_NOTIFICATIONS, false);
         // options
         defaultVisibilityDistance = (int) ConfigHelper.getOrDefault(config, CONFIG_VISIBILITY_DISTANCE, 20);
-        registerCommands = (boolean) ConfigHelper.getOrDefault(config, CONFIG_REGISTER_COMMANDS, true);
+        registerCommands = (boolean) ConfigHelper.getOrDefault(config, CONFIG_REGISTER_COMMANDS, false);
         updateVisibilityInterval = (int) ConfigHelper.getOrDefault(config, CONFIG_UPDATE_VISIBILITY_INTERVAL, 20);
 
         config.set(CONFIG_REPORT_ERRORS_TO_SENTRY, null);

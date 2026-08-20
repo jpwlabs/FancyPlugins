@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 
 import java.io.BufferedReader;
 import java.io.IOException;

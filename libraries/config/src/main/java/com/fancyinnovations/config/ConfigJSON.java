@@ -1,8 +1,8 @@
 package com.fancyinnovations.config;
 
 import com.google.gson.*;
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 
 import java.io.File;
 import java.io.FileReader;

@@ -1,7 +1,7 @@
 package com.fancyinnovations.fancydialogs.joinedplayerscache;
 
 import com.fancyinnovations.fancydialogs.FancyDialogsPlugin;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.jdb.JDB;
 
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package de.oliver.fancyholograms.api;
 
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;

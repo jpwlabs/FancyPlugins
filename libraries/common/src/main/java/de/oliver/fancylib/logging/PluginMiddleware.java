@@ -1,7 +1,7 @@
 package de.oliver.fancylib.logging;
 
-import de.oliver.fancyanalytics.logger.LogEntry;
-import de.oliver.fancyanalytics.logger.middleware.Middleware;
+import de.oliver.jpw.logging.LogEntry;
+import de.oliver.jpw.logging.middleware.Middleware;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;

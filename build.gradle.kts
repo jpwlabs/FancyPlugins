@@ -10,11 +10,20 @@ allprojects {
     description = "Minecraft plugins of FancyInnovations"
 
     repositories {
-        mavenLocal()
         mavenCentral()
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.fancyinnovations.com/releases")
         maven(url = "https://maven.fancyspaces.net/fancyinnovations/releases")
         maven(url = "https://jitpack.io")
+    }
+
+    configurations.configureEach {
+        // The pinned Paper 1.21.8 dev-bundle snapshot omits this module's
+        // version in its Gradle metadata. Resolve the exact runtime version.
+        resolutionStrategy.force("net.kyori:adventure-text-serializer-ansi:4.24.0")
+    }
+
+    dependencyLocking {
+        lockAllConfigurations()
     }
 }

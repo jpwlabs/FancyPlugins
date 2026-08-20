@@ -1,7 +1,7 @@
 package de.oliver.fancynpcs;
 
-import de.oliver.fancyanalytics.logger.ExtendedFancyLogger;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.ExtendedFancyLogger;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.fancylib.serverSoftware.ServerSoftware;
 import de.oliver.fancynpcs.api.Npc;
 import de.oliver.fancynpcs.api.NpcAttribute;

@@ -1,7 +1,7 @@
 package de.oliver.fancynpcs.skins.uuidcache;
 
 import com.google.gson.Gson;
-import de.oliver.fancyanalytics.logger.properties.ThrowableProperty;
+import de.oliver.jpw.logging.properties.ThrowableProperty;
 import de.oliver.fancynpcs.FancyNpcs;
 import de.oliver.jdb.JDB;
 

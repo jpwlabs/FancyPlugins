@@ -7,7 +7,7 @@ import com.fancyinnovations.fancydialogs.FancyDialogsPlugin;
 public class FDFeatureFlags {
 
     public static final FeatureFlag DEBUG_MODE = new FeatureFlag("debug-mode", "Enable debug mode", false);
-    public static final FeatureFlag DISABLE_WELCOME_DIALOG = new FeatureFlag("disable-welcome-dialog", "Disable showing a welcome dialog when a player joins for the first time", false);
+    public static final FeatureFlag DISABLE_WELCOME_DIALOG = new FeatureFlag("disable-welcome-dialog", "Disable showing a welcome dialog when a player joins for the first time", true);
     public static final FeatureFlag DISABLE_QUICK_ACTIONS_DIALOG = new FeatureFlag("disable-quick-actions-dialog", "Disable the quick actions dialog", false);
 
     public static void load() {

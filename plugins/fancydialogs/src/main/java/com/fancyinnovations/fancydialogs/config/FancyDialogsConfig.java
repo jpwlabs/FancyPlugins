@@ -13,6 +13,7 @@ public class FancyDialogsConfig {
     private String welcomeDialogID;
     private String quickActionsDialogID;
     private int closeTimeout;
+    private boolean registerCommands;
 
     public void load() {
         FancyDialogsPlugin.get().reloadConfig();
@@ -32,6 +33,9 @@ public class FancyDialogsConfig {
 
         closeTimeout = (int) ConfigHelper.getOrDefault(config, "close_timeout", 1000 * 60 * 2);
         config.setInlineComments("close_timeout", List.of("The time in milliseconds after which a dialog will be considered closed if the player does not respond. 0 means no timeout."));
+
+        registerCommands = (boolean) ConfigHelper.getOrDefault(config, "register_commands", false);
+        config.setInlineComments("register_commands", List.of("JPW policy: administrative commands are disabled unless explicitly enabled."));
 
         FancyDialogsPlugin.get().saveConfig();
     }
@@ -54,5 +58,9 @@ public class FancyDialogsConfig {
 
     public int getCloseTimeout() {
         return closeTimeout;
+    }
+
+    public boolean isRegisterCommands() {
+        return registerCommands;
     }
 }

@@ -11,6 +11,7 @@ import de.oliver.fancynpcs.api.skins.SkinManager;
 import de.oliver.fancynpcs.skins.cache.SkinCache;
 import de.oliver.fancynpcs.skins.cache.SkinCacheData;
 import de.oliver.fancynpcs.skins.uuidcache.UUIDCache;
+import de.oliver.fancynpcs.security.SkinSourcePolicy;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.lushplugins.chatcolorhandler.ChatColorHandler;
@@ -61,29 +62,19 @@ public class SkinManagerImpl implements SkinManager, Listener {
 
     @Override
     public SkinData getByIdentifier(String identifier, SkinData.SkinVariant variant) throws SkinLoadException {
-        if (SkinUtils.isUUID(identifier)) {
-            return getByUUID(UUID.fromString(identifier), variant);
+        if (!SkinSourcePolicy.isApproved(identifier)) {
+            throw new SkinLoadException(SkinLoadException.Reason.INVALID_FILE,
+                    "(JPW POLICY REJECTED IDENTIFIER = '" + identifier + "')");
         }
 
-        if (SkinUtils.isURL(identifier)) {
-            return getByURL(identifier, variant);
+        SkinData cached = tryToGetFromCache(identifier, variant);
+        if (cached != null) {
+            return cached;
         }
 
-        if (SkinUtils.isFile(identifier)) {
-            return getByFile(identifier, variant);
-        }
-
-        if (SkinUtils.isPlaceholder(identifier)) {
-            String parsed = ChatColorHandler.translate(identifier);
-
-            if (parsed.isBlank() || parsed.equalsIgnoreCase("null") || SkinUtils.isPlaceholder(parsed)) {
-                throw new SkinLoadException(SkinLoadException.Reason.INVALID_PLACEHOLDER, "(RAW = '" + identifier + "'; PARSED = '" + parsed + "')");
-            }
-
-            return getByIdentifier(parsed, variant);
-        }
-
-        return getByUsername(identifier, variant);
+        FancyNpcs.getInstance().getFancyLogger().warn(
+                "Approved skin '" + identifier + "' is not cached; retaining the safe default skin");
+        return new SkinData(identifier, variant);
     }
 
     @Override
