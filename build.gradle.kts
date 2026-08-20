@@ -26,4 +26,9 @@ allprojects {
     dependencyLocking {
         lockAllConfigurations()
     }
+
+    tasks.withType<org.gradle.api.tasks.bundling.AbstractArchiveTask>().configureEach {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
 }
