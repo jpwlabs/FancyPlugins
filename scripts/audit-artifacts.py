@@ -32,6 +32,9 @@ FORBIDDEN = (
     b"fancynpcs/skins/mojang",
     b"sessionserver.mojang.com",
     b"api.mineskin.org",
+    b"ConsoleCommandDialogAction",
+    b"PlayerCommandDialogAction",
+    b"SendToServerDialogAction",
 )
 MAX_CLASS_MAJOR = 65
 
