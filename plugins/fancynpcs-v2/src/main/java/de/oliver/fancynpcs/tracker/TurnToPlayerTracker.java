@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class TurnToPlayerTracker implements Runnable {
 
@@ -57,10 +58,13 @@ public class TurnToPlayerTracker implements Runnable {
                     Boolean wasPreviouslyLooking = npc.getIsLookingAtPlayer().put(player.getUniqueId(), true);
                     // Comparing the previous state with current state to prevent event from being called continuously.
                     if (wasPreviouslyLooking == null || !wasPreviouslyLooking) {
-                        // Calling NpcStartLookingEvent from the main thread.
-                        FancyNpcs.getInstance().getScheduler().runTask(null, () -> {
-                            new NpcStartLookingEvent(npc, player).callEvent();
-                        });
+                        // Resolve the player on the main thread instead of capturing CraftPlayer in the
+                        // deferred task. FancyScheduler retains its most recent BukkitTask, so capturing
+                        // Player here keeps the complete disconnected player/connection graph alive.
+                        FancyNpcs.getInstance().getScheduler().runTask(
+                                null,
+                                createStartLookingEventTask(npc, player.getUniqueId())
+                        );
                     }
                     // Updating state if changed.
                 } else if (npcData.isTurnToPlayer() && npc.getIsLookingAtPlayer().getOrDefault(player.getUniqueId(), false)) {
@@ -70,12 +74,31 @@ public class TurnToPlayerTracker implements Runnable {
                         npc.move(player, false);
                     }
                     // Calling NpcStopLookingEvent from the main thread.
-                    FancyNpcs.getInstance().getScheduler().runTask(null, () -> {
-                        new NpcStopLookingEvent(npc, player).callEvent();
-                    });
+                    FancyNpcs.getInstance().getScheduler().runTask(
+                            null,
+                            createStopLookingEventTask(npc, player.getUniqueId())
+                    );
                 }
             }
         }
+    }
+
+    static Runnable createStartLookingEventTask(Npc npc, UUID playerId) {
+        return () -> {
+            Player onlinePlayer = Bukkit.getPlayer(playerId);
+            if (onlinePlayer != null) {
+                new NpcStartLookingEvent(npc, onlinePlayer).callEvent();
+            }
+        };
+    }
+
+    static Runnable createStopLookingEventTask(Npc npc, UUID playerId) {
+        return () -> {
+            Player onlinePlayer = Bukkit.getPlayer(playerId);
+            if (onlinePlayer != null) {
+                new NpcStopLookingEvent(npc, onlinePlayer).callEvent();
+            }
+        };
     }
 
     /**

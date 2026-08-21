@@ -15,6 +15,8 @@ The interaction policy includes the semantic correction from upstream commit
 `512aa29dd42ef27b728b73fccd6a013f816995a6`, covered by an exactly-once regression test.
 FancyDialogs `1.1.2-jpw.5` also removes its injected packet decoder on quit/disable and
 resolves active players by UUID so a closed Netty channel cannot retain a Bukkit player.
+FancyNpcs `2.9.2.341-jpw.5` resolves players by UUID in deferred look-at events so a
+completed scheduler task cannot retain a disconnected CraftPlayer and connection graph.
 
 Build command:
 
@@ -23,7 +25,7 @@ Build command:
   :plugins:fancyholograms-v2:shadowJar :plugins:fancydialogs:shadowJar \
   --no-daemon --no-build-cache
 python3 scripts/normalize-artifacts.py \
-  plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.4.jar \
+  plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.5.jar \
   plugins/fancyholograms-v2/build/libs/FancyHolograms-2.9.1.180-jpw.4.jar \
   plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.5.jar
 python3 scripts/audit-artifacts.py
