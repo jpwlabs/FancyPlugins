@@ -6,7 +6,7 @@ import java.util.Set;
 /** Closed allowlist for JPW-owned, pre-cached lobby skin profiles. */
 public final class SkinSourcePolicy {
 
-    private static final Set<String> APPROVED = Set.of("default.png", "mega-guide.png");
+    private static final Set<String> APPROVED = Set.of("default.png", "mega-girl.png", "atlas.png");
 
     private SkinSourcePolicy() {
     }

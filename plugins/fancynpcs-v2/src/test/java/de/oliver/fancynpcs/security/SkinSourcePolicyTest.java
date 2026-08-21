@@ -10,7 +10,8 @@ final class SkinSourcePolicyTest {
 
     @Test
     void permitsOnlyApprovedStaticProfileNames() {
-        assertTrue(SkinSourcePolicy.isApproved("mega-guide.png"));
+        assertTrue(SkinSourcePolicy.isApproved("mega-girl.png"));
+        assertTrue(SkinSourcePolicy.isApproved("atlas.png"));
         assertTrue(SkinSourcePolicy.isApproved("default.png"));
 
         assertFalse(SkinSourcePolicy.isApproved("https://example.com/skin.png"));
@@ -23,6 +24,7 @@ final class SkinSourcePolicyTest {
     void failedOrUnapprovedAcquisitionRetainsSafeDefault() {
         assertEquals("default.png", SkinSourcePolicy.safeIdentifier("https://example.com/skin.png"));
         assertEquals("default.png", SkinSourcePolicy.safeIdentifier(null));
-        assertEquals("mega-guide.png", SkinSourcePolicy.safeIdentifier(" MEGA-GUIDE.PNG "));
+        assertEquals("mega-girl.png", SkinSourcePolicy.safeIdentifier(" MEGA-GIRL.PNG "));
+        assertEquals("atlas.png", SkinSourcePolicy.safeIdentifier(" ATLAS.PNG "));
     }
 }
