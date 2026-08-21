@@ -11,12 +11,14 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ServerboundCustomClickActionPacket;
 import net.minecraft.server.level.ServerPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class PacketListenerImpl extends FS_PacketListener {
 
@@ -29,6 +31,7 @@ public class PacketListenerImpl extends FS_PacketListener {
     @Override
     public void inject(Player player) {
         ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
+        UUID playerId = player.getUniqueId();
 
         Channel channel = serverPlayer.connection.connection.channel;
 
@@ -47,19 +50,36 @@ public class PacketListenerImpl extends FS_PacketListener {
                 }
 
                 if (packet == FS_ServerboundPacket.Type.ALL) {
+                    Player onlinePlayer = Bukkit.getPlayer(playerId);
+                    if (onlinePlayer == null) {
+                        return;
+                    }
                     FS_ServerboundPacket fsPacket = convert(packetType, msg);
-                    PacketReceivedEvent packetReceivedEvent = new PacketReceivedEvent(fsPacket, player);
+                    PacketReceivedEvent packetReceivedEvent = new PacketReceivedEvent(fsPacket, onlinePlayer);
                     listeners.forEach(listener -> listener.accept(packetReceivedEvent));
                     return;
                 }
 
                 if (packet == packetType) {
+                    Player onlinePlayer = Bukkit.getPlayer(playerId);
+                    if (onlinePlayer == null) {
+                        return;
+                    }
                     FS_ServerboundPacket fsPacket = convert(packetType, msg);
-                    PacketReceivedEvent packetReceivedEvent = new PacketReceivedEvent(fsPacket, player);
+                    PacketReceivedEvent packetReceivedEvent = new PacketReceivedEvent(fsPacket, onlinePlayer);
                     listeners.forEach(listener -> listener.accept(packetReceivedEvent));
                 }
             }
         });
+    }
+
+    @Override
+    public void uninject(Player player) {
+        ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
+        Channel channel = serverPlayer.connection.connection.channel;
+        if (channel.pipeline().get(PIPELINE_NAME) != null) {
+            channel.pipeline().remove(PIPELINE_NAME);
+        }
     }
 
     private FS_ServerboundPacket.Type getPacketType(Packet<?> packet) {

@@ -2,6 +2,8 @@ name: Build and test
 
 on:
   push:
+    branches-ignore:
+      - jpw/megamine-java21
   pull_request:
     types:
       - opened

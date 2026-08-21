@@ -14,6 +14,7 @@ import com.fancyinnovations.fancydialogs.config.FancyDialogsConfig;
 import com.fancyinnovations.fancydialogs.dialog.DialogImpl;
 import com.fancyinnovations.fancydialogs.fancynpcs.OpenDialogNpcAction;
 import com.fancyinnovations.fancydialogs.joinedplayerscache.JoinedPlayersCache;
+import com.fancyinnovations.fancydialogs.listener.CustomClickActionPacketListener;
 import com.fancyinnovations.fancydialogs.listener.DialogButtonClickedListener;
 import com.fancyinnovations.fancydialogs.listener.PlayerDeathListener;
 import com.fancyinnovations.fancydialogs.listener.PlayerJoinListener;
@@ -178,6 +179,10 @@ public class FancyDialogsPlugin extends JavaPlugin implements FancyDialogs {
 
     @Override
     public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            CustomClickActionPacketListener.get().getPacketListener().uninject(player);
+        }
+
         for (Dialog dialog : dialogRegistry.getAll()) {
             // Close all viewers of the dialog
             for (UUID viewer : dialog.getViewers()) {

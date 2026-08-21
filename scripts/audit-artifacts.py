@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTIFACTS = {
     "FancyNpcs": ROOT / "plugins/fancynpcs-v2/build/libs/FancyNpcs-2.9.2.341-jpw.4.jar",
     "FancyHolograms": ROOT / "plugins/fancyholograms-v2/build/libs/FancyHolograms-2.9.1.180-jpw.4.jar",
-    "FancyDialogs": ROOT / "plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.4.jar",
+    "FancyDialogs": ROOT / "plugins/fancydialogs/build/libs/FancyDialogs-1.1.2-jpw.5.jar",
 }
 FORBIDDEN = (
     b"de/oliver/fancyanalytics",

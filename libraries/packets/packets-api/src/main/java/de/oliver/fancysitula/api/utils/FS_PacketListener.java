@@ -19,6 +19,12 @@ public abstract class FS_PacketListener {
 
     public abstract void inject(Player player);
 
+    /**
+     * Removes this listener from the player's network pipeline. Implementations must not retain a
+     * disconnected Player through an injected channel handler.
+     */
+    public abstract void uninject(Player player);
+
     public void addListener(Consumer<PacketReceivedEvent> listener) {
         listeners.add(listener);
     }
